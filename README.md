@@ -1,9 +1,14 @@
 # `$ epy`
 
-[![Downloads](https://static.pepy.tech/personalized-badge/epy-reader?period=month&units=none&left_color=grey&right_color=brightgreen&left_text=downloads/month)](https://pepy.tech/project/epy-reader)
+## Quick Start
 
-<a href='https://ko-fi.com/P5P4IDCX2' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+Clone this repo then run the following from the repo root:
+```
+pipx install poetry
+poetry install
+pipx install -e .  # editable
 
+```
 ![screenshot](https://raw.githubusercontent.com/wustho/epy/master/screenshot.png)
 
 CLI Ebook Reader.
