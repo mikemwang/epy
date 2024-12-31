@@ -141,6 +141,9 @@ class Reader:
         self._process_counting_letter: Optional[multiprocessing.Process] = None
         self.letters_count: Optional[LettersCount] = None
 
+        # highlight the center line
+        self.hl_line = False
+
     def run_counting_letters(self):
         if self._multiprocess_support:
             try:
@@ -910,6 +913,12 @@ class Reader:
                             )
                             sys.exit()
 
+                    elif k in self.keymap.ToggleHL:
+                        # TODO:
+                        # get rid of config options for HL
+                        self.hl_line = not self.hl_line
+                        pass     
+
                     elif k in self.keymap.TTSToggle and self.tts_support:
                         tospeak = ""
                         for i in text_structure.text_lines[
@@ -1509,7 +1518,8 @@ class Reader:
 
                     self.screen.clear()
                     self.screen.addstr(0, 0, countstring)
-                    board.write(reading_state.row)
+                    hl_line = rows // 2 if self.hl_line else -1
+                    board.write(reading_state.row, hl_line=hl_line)
 
                     # check if letters counting process is done
                     self.try_assign_letters_count()

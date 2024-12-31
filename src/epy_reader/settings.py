@@ -54,6 +54,7 @@ class Settings:
     SeamlessBetweenChapters: bool = False
     PreferredTTSEngine: Optional[str] = None
     TTSEngineArgs: List[str] = field(default_factory=list)
+    HLCurLine: bool = False
 
 
 @dataclass(frozen=True)
@@ -88,6 +89,7 @@ class CfgDefaultKeymaps:
     TTSToggle: str = "!"
     DoubleSpreadToggle: str = "D"
     Library: str = "R"
+    ToggleHL: str = " "
 
 
 @dataclass(frozen=True)
@@ -135,3 +137,4 @@ class Keymap:
     SwitchColor: Tuple[Key, ...]
     TTSToggle: Tuple[Key, ...]
     TableOfContents: Tuple[Key, ...]
+    ToggleHL: Tuple[Key, ...]

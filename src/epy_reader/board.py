@@ -3,7 +3,7 @@ import re
 from typing import Optional, Tuple, Union
 
 from epy_reader.models import Direction, InlineStyle, Key, NoUpdate
-from epy_reader.settings import DoubleSpreadPadding
+from epy_reader.settings import DoubleSpreadPadding, CursesColorPair
 
 
 class InfiniBoard:
@@ -28,7 +28,7 @@ class InfiniBoard:
         self.screen = screen
         self.screen_rows, self.screen_cols = self.screen.getmaxyx()
         self.textwidth = textwidth
-        self.x = ((self.screen_cols - self.textwidth) // 2) + 1
+        self.x = ((self.screen_cols - self.textwidth) // 2) # + 1
         self.text = text
         self.total_lines = len(text)
         self.default_style: Tuple[InlineStyle, ...] = default_style
@@ -76,7 +76,7 @@ class InfiniBoard:
     def chgat(self, row: int, y: int, x: int, n: int, attr: int) -> None:
         self.screen.chgat(y - row, self.x + x, n, attr)
 
-    def write(self, row: int, bottom_padding: int = 0) -> None:
+    def write(self, row: int, bottom_padding: int = 0, hl_line=-1) -> None:
         for n_row in range(min(self.screen_rows - bottom_padding, self.total_lines - row)):
             text_line = self.text[row + n_row]
 
@@ -89,7 +89,15 @@ class InfiniBoard:
             # Since the exception is raised "after the character is printed"
             # then it seems to be safe to catch it.
             try:
-                self.screen.addstr(n_row, self.x, text_line)
+                if hl_line >= 0:
+                    if n_row == hl_line:
+                        self.screen.addstr(n_row, self.x, text_line)
+                        self.screen.addstr(n_row, self.x - 2, ">")
+                        self.screen.addstr(n_row, self.x + self.textwidth + 1, "<")
+                    else:
+                        self.screen.addstr(n_row, self.x, text_line, curses.A_DIM)
+                else:
+                    self.screen.addstr(n_row, self.x, text_line)
             except curses.error:
                 pass
 
