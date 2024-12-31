@@ -5,6 +5,10 @@ from typing import List, Optional, Tuple
 
 from epy_reader.models import Key
 
+class CursesColorPair(Enum):
+    DEFAULT = 1
+    DARK = 2
+    LIGHT = 3
 
 class DoubleSpreadPadding(Enum):
     LEFT = 10

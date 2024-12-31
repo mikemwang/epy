@@ -16,6 +16,7 @@ from html import unescape
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import epy_reader.settings as settings
+from epy_reader.settings import CursesColorPair
 from epy_reader.board import InfiniBoard
 from epy_reader.config import Config
 from epy_reader.ebooks import Azw, Ebook, Epub, Mobi
@@ -87,10 +88,10 @@ class Reader:
         self.is_color_supported: bool = False
         try:
             curses.use_default_colors()
-            curses.init_pair(1, self.setting.DefaultColorFG, self.setting.DefaultColorBG)
-            curses.init_pair(2, self.setting.DarkColorFG, self.setting.DarkColorBG)
-            curses.init_pair(3, self.setting.LightColorFG, self.setting.LightColorBG)
-            self.screen.bkgd(curses.color_pair(1))
+            curses.init_pair(CursesColorPair.DEFAULT.value, self.setting.DefaultColorFG, self.setting.DefaultColorBG)
+            curses.init_pair(CursesColorPair.DARK.value, self.setting.DarkColorFG, self.setting.DarkColorBG)
+            curses.init_pair(CursesColorPair.LIGHT.value, self.setting.LightColorFG, self.setting.LightColorBG)
+            self.screen.bkgd(curses.color_pair(CursesColorPair.DEFAULT.value))
             self.is_color_supported = True
         except:
             self.is_color_supported = False
